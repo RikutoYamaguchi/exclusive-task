@@ -10,15 +10,21 @@ const TASK_TYPES = {
 
 /**
  * プロセス管理クラス
+ * 【タスク追加メソッド】
  * task    : PromiseオブジェクトまたはDeferredオブジェクトを返す関数を設定 (引数:前taskの結果・エラー, 前taskが成功したか)
- * success : 前task成功時に実行 (引数:前taskの結果)
- * fail    : 前task失敗時に実行 (引数:前taskのエラー)
- * failStop: 前task失敗時に実行かつその後のtaskを止める (引数:前taskのエラー)
- * complete: 全task成功時に実行 (引数:全taskの結果配列)
- * always  : 全task後必ず実行 (引数:全taskの結果配列、全taskのエラー配列)
- * error   : 全task終了後failを一度でもすれば実行 (引数:全taskのエラー配列)
- * abort   : 処理中断
- * aborted : abortにより処理が中断した時に実行
+ * success : 前task成功時に実行される (引数:前taskの結果)
+ * fail    : 前task失敗時に実行される (引数:前taskのエラー)
+ * failStop: 前task失敗時に実行されその後のtaskを止める (引数:前taskのエラー)
+ * complete: 全task成功時に実行される (引数:全taskの結果配列)
+ * always  : 全task後必ず実行される (引数:全taskの結果配列、全taskのエラー配列)
+ * error   : 全task終了後failを一度でもすれば実行される (引数:全taskのエラー配列)
+ * aborted : abortにより処理が中断した時に実行される
+ * 【プロセスメソッド】
+ * abort   : 処理中断しabortedへ
+ * reset   : プロセスを初期状態にする
+ * restart : プロセスを初期状態からやり直す
+ * kill    : プロセスを強制的に終了する
+ * destroy : プロセスを破棄する(完全に初期状態に戻しtaskも消去)
  * exec    : 実行
  */
 class Process {
