@@ -7,16 +7,19 @@ import Task from '../class/Task'
 let is_login = 0;
 
 // モーダル出力モック
-function showModal (dfd) {
+function showModal () {
+  const dfd = new Deferred();
   console.log('showModal');
   setTimeout(() => {
     // ユーザーが入力をしたりしているイメージの待ち時間
     dfd.resolve()
   }, 1000);
+  return dfd
 }
 
 // ログイン判別APIモック
-function isLogin (dfd) {
+function isLogin () {
+  const dfd = new Deferred();
   console.log('isLogin');
   setTimeout(() => {
     if (is_login % 2 === 0) {
@@ -26,14 +29,16 @@ function isLogin (dfd) {
     }
     // is_login++;
   }, 1000)
+  return dfd;
 }
 
 // 認証モック
-function auth (id, pass, dfd) {
-  console.log('auth');
+function auth (id, pass) {
+  const dfd = new Deferred();
   setTimeout(() => {
     dfd.resolve();
-  }, 1000)
+  }, 1000);
+  return dfd;
 }
 
 // 排他処理のためのシングルトン
@@ -62,9 +67,7 @@ class SampleAuthTask extends Task {
 
   // 認証をチェックする
   checkAuth () {
-    const dfd = new Deferred();
-    isLogin(dfd);
-    dfd
+    isLogin()
       .then(() => {
         this.complete();
       })
@@ -75,20 +78,17 @@ class SampleAuthTask extends Task {
 
   // モーダル表示
   showModal () {
-    const dfd = new Deferred();
-    showModal(dfd);
-    dfd.then(() => {
-      this.auth();
-    }).catch(() => {
-      this.error();
-    })
+    showModal()
+      .then(() => {
+        this.auth();
+      }).catch(() => {
+        this.error();
+      })
   }
 
   // 認証
   auth () {
-    const dfd = new Deferred();
-    auth(null, null, dfd);
-    dfd
+    auth(null, null)
       .then(() => {
         this.complete();
       })
