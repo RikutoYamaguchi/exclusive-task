@@ -1,4 +1,3 @@
-// シングルトン
 import Deferred from "../class/Deferred";
 import ExclusiveTask from "../class/ExclusiveTask";
 import Task from '../class/Task'
